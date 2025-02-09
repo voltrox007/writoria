@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1>Human stories & ideas</h1>
+        <p>A place to read, write, and deepen your understanding</p>
+        <a href="#" class="start-reading">Start reading</a>
+    </div>
+    <!-- <div class="hero-image">
+        <img src="{{ url_for('static', filename='images/hero.png') }}" alt="Decorative illustration" style="height:20vh">
+    </div> -->
+</div>
+
+<div class="posts-container">
+    {% for post in posts %}
+    <article class="post-card">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content[:200] }}...</p>
+        <div class="post-meta">
+            <span>By {{ post.author.username }}</span>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}
