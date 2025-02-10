@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medium Clone</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -37,5 +38,26 @@
             <a href="#">Teams</a>
         </div>
     </footer>
+
+    <!-- Chat Button -->
+    <button id="chat-button" class="chat-button">
+        <i class="fas fa-comment"></i>
+    </button>
+
+    <!-- Chat Interface -->
+    <div id="chat-interface" class="chat-interface">
+        <div class="chat-header">
+            <h3>Chat with AI</h3>
+            <button id="close-chat" class="close-chat">&times;</button>
+        </div>
+        <div id="chat-messages" class="chat-messages"></div>
+        <form id="chat-form" class="chat-form">
+            <input type="text" id="user-input" placeholder="Type your message..." required>
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>
 </html>
+

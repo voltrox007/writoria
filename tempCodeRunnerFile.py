@@ -5,7 +5,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import google.generativeai as genai
 import os
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
@@ -91,6 +90,7 @@ def write():
     return render_template('write.html')
 
 
+
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 @app.route('/api/chat', methods=['POST'])
@@ -117,6 +117,9 @@ def chat():
     response = model.generate_content(prompt)
 
     return jsonify({"response": response.text})
+
+
+
 
 
 if __name__ == '__main__':
