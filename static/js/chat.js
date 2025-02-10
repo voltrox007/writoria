@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatForm = document.getElementById("chat-form");
     const userInput = document.getElementById("user-input");
     const chatMessages = document.getElementById("chat-messages");
+    const signOutButton = document.getElementById("sign-out"); // Add reference to sign-out button
 
     function getPageContent() {
         return document.body.innerText.replace(/\s+/g, ' ').trim();
@@ -15,10 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
         chatInterface.classList.add("fade-in");
         chatButton.style.display = "none";
 
-        // Rick's Greeting Message
-        setTimeout(() => {
-            displayMessage("Rick", "Hey there! I'm Rick. Ask me anything about this page.", "bot-message");
-        }, 500);
+        // Show welcome message only once per sign-in session
+        if (!sessionStorage.getItem("welcomeMessageShown")) {
+            setTimeout(() => {
+                displayMessage("Rick", "Hey there! I'm Rick. Ask me anything about this page.", "bot-message");
+                sessionStorage.setItem("welcomeMessageShown", "true");
+            }, 500);
+        }
     });
 
     closeChat.addEventListener("click", () => {
@@ -71,5 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
         messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Sign-Out Event (Clears session storage)
+    if (signOutButton) {
+        signOutButton.addEventListener("click", () => {
+            sessionStorage.removeItem("welcomeMessageShown"); // Reset welcome message flag
+        });
     }
 });
