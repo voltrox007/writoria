@@ -5,23 +5,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatForm = document.getElementById("chat-form");
     const userInput = document.getElementById("user-input");
     const chatMessages = document.getElementById("chat-messages");
-    const signOutButton = document.getElementById("sign-out"); // Add reference to sign-out button
+    const signOutButton = document.getElementById("sign-out");
+    const chatPopup = document.getElementById("chat-popup");
+    const closePopup = document.getElementById("close-popup");
+
+    const isAuthenticated = chatButton.getAttribute("data-authenticated") === "true";
 
     function getPageContent() {
         return document.body.innerText.replace(/\s+/g, ' ').trim();
     }
 
     chatButton.addEventListener("click", () => {
-        chatInterface.style.display = "flex";
-        chatInterface.classList.add("fade-in");
-        chatButton.style.display = "none";
+        if (!isAuthenticated) {
+            chatPopup.style.display = "block"; // Show login popup
+        } else {
+            chatInterface.style.display = "flex";
+            chatInterface.classList.add("fade-in");
+            chatButton.style.display = "none";
 
-        // Show welcome message only once per sign-in session
-        if (!sessionStorage.getItem("welcomeMessageShown")) {
-            setTimeout(() => {
-                displayMessage("Rick", "Hey there! I'm Rick. Ask me anything about this page.", "bot-message");
-                sessionStorage.setItem("welcomeMessageShown", "true");
-            }, 500);
+            // Reset welcome message flag on login (ensures message appears again)
+            if (!sessionStorage.getItem("welcomeMessageShown")) {
+                setTimeout(() => {
+                    displayMessage("Rick", "Hey there! I'm Rick. Ask me anything about this page.", "bot-message");
+                    sessionStorage.setItem("welcomeMessageShown", "true");
+                }, 500);
+            }
         }
     });
 
@@ -34,12 +42,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 500);
     });
 
+    closePopup.addEventListener("click", () => {
+        chatPopup.style.display = "none"; // Close the login popup
+    });
+
     chatForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const message = userInput.value;
+        const message = userInput.value.trim();
         userInput.value = "";
 
-        if (message.trim() === "") return;
+        if (message === "") return;
 
         // Display user message
         displayMessage("You", message, "user-message");
@@ -51,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         chatMessages.appendChild(typingIndicator);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Send question + page content
+        // Send user message + page content to backend
         fetch("/api/chat", {
             method: "POST",
             headers: {
@@ -66,6 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((data) => {
             typingIndicator.remove();
             displayMessage("Rick", data.response, "bot-message");
+        })
+        .catch(() => {
+            typingIndicator.remove();
+            displayMessage("Rick", "Oops! Something went wrong. Try again later.", "bot-message");
         });
     });
 
@@ -75,6 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
         messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Reset welcome message when logging in
+    if (isAuthenticated) {
+        sessionStorage.removeItem("welcomeMessageShown");
     }
 
     // Sign-Out Event (Clears session storage)

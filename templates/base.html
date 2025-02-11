@@ -40,22 +40,32 @@
     </footer>
 
     <!-- Chat Button -->
-    <button id="chat-button" class="chat-button">
-        <i class="fas fa-comment"></i>
-    </button>
+<button id="chat-button" class="chat-button" data-authenticated="{{ 'true' if current_user.is_authenticated else 'false' }}">
+    <i class="fas fa-comment"></i>
+</button>
 
-    <!-- Chat Interface -->
-    <div id="chat-interface" class="chat-interface">
-        <div class="chat-header">
-            <h3>Chat with AI</h3>
-            <button id="close-chat" class="close-chat">&times;</button>
-        </div>
-        <div id="chat-messages" class="chat-messages"></div>
-        <form id="chat-form" class="chat-form">
-            <input type="text" id="user-input" placeholder="Type your message..." required>
-            <button type="submit"><i class="fas fa-paper-plane"></i></button>
-        </form>
+<!-- Chat Login Popup -->
+<div id="chat-popup" class="chat-popup">
+    <div class="popup-content">
+        <p>You need to log in to use the chat.</p>
+        <a href="{{ url_for('login') }}" class="popup-login">Login</a>
+        <button id="close-popup" class="popup-close">&times;</button>
     </div>
+</div>
+
+<!-- Chat Interface -->
+<div id="chat-interface" class="chat-interface">
+    <div class="chat-header">
+        <h3>Chat with AI</h3>
+        <button id="close-chat" class="close-chat">&times;</button>
+    </div>
+    <div id="chat-messages" class="chat-messages"></div>
+    <form id="chat-form" class="chat-form">
+        <input type="text" id="user-input" placeholder="Type your message..." required>
+        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+    </form>
+</div>
+
 
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>
