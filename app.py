@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import google.generativeai as genai
+
+
 import os
 
 
@@ -34,8 +36,7 @@ def load_user(user_id):
 # Routes
 @app.route('/')
 def home():
-    posts = Post.query.all()
-    return render_template('index.html', posts=posts)
+    return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -89,6 +90,29 @@ def write():
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('write.html')
+
+
+
+@app.route('/blog')
+def blog():
+    posts = Post.query.order_by(Post.id.desc()).all()
+    return render_template('blog.html', posts=posts)
+
+@app.route('/write-blog', methods=['GET', 'POST'])
+@login_required
+def write_blog():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        content = request.form.get('content')
+        
+        if title and content:
+            post = Post(title=title, content=content, author=current_user)
+            db.session.add(post)
+            db.session.commit()
+            return redirect(url_for('blog'))
+            
+    return render_template('write-blog.html')
+
 
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))

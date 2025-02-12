@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="editor-container">
+    <form method="POST" class="editor-form">
+        <div class="editor-header">
+            <div class="draft-status">Draft in Writoria</div>
+            <button type="submit" class="publish-button">Publish</button>
+        </div>
+        
+        <div class="editor-content">
+            <input type="text" name="title" class="title-input" placeholder="Title" required>
+            <textarea name="content" class="content-area" placeholder="Tell your story..." required></textarea>
+        </div>
+    </form>
+</div>
+
+<style>
+.editor-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.draft-status {
+    color: #6b6b6b;
+    font-size: 0.9rem;
+}
+
+.publish-button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 99px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.editor-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.title-input {
+    width: 100%;
+    font-size: 2.5rem;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    font-family: inherit;
+}
+
+.content-area {
+    width: 100%;
+    min-height: 500px;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    resize: none;
+    font-family: inherit;
+}
+
+.title-input::placeholder,
+.content-area::placeholder {
+    color: #6b6b6b;
+}
+
+@media (max-width: 768px) {
+    .editor-container {
+        padding: 1rem;
+    }
+
+    .title-input {
+        font-size: 2rem;
+    }
+
+    .content-area {
+        font-size: 1.1rem;
+    }
+}
+</style>
+{% endblock %}
+
