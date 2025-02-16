@@ -43,6 +43,14 @@ def home():
 def writoria():
     return redirect(url_for('home'))
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -152,6 +160,16 @@ def delete_blog(post_id):
     db.session.commit()
     flash("Post deleted successfully.")
     return redirect(url_for('blog'))
+
+
+@app.route('/submit_request', methods=['POST'])
+def submit_request():
+    name = request.form['name']
+    email = request.form['email']
+    message = request.form['message']
+    # Handle the form submission (e.g., save to database, send email, etc.)
+    flash('Your request has been submitted successfully!', 'success')
+    return redirect(url_for('help'))
 
 @app.route('/api/chat', methods=['POST'])
 def chat():

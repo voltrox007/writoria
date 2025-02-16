@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="about-container">
+    <h1>About Us</h1>
+    <div class="team-member" id="member1">
+        <div class="member-info">
+            <h2>Divaym</h2>
+            <p>Role: UI/UX Designer</p>
+            <p>Jack of all trades and master communicator. An extrovert who eats anxiety for breakfast. Responsible for the UI/UX magic as an artist with a keen eye, seamless presentations, and bringing ideas to life with confidence and clarity.</p>
+        </div>
+    </div>
+    <div class="team-member" id="member2">
+        <div class="member-info">
+            <h2>Hritabrata Das</h2>
+            <p>Role: Developer</p>
+            <p>Master coder and API wizard. The backbone of seamless integrations and intelligent systems. The guy who treats working with AI as child's play, turning complex code into smooth functionality, making everything work like magic.</p>
+        </div>
+    </div>
+    <div class="team-member" id="member3">
+        <div class="member-info">
+            <h2>Abhinav Dadwal</h2>
+            <p>Role: Developer</p>
+            <p>Code virtuoso and full-stack magician. CSS, JS, Flask, Python ??? Not a problem. The sleezy coder who slays, whether it's lines of code or hearts, all with a killer smile. Ask him anything, and watch the magic unfold. Because if it can be coded, he’ll make it happen.</p>
+        </div>
+    </div>
+    <div class="team-member" id="member4">
+        <div class="member-info">
+            <h2>Harsh Kumar</h2>
+            <p>Role: Data and Search</p>
+            <p>The silent architect of our digital empire. The kingmaker who manages the database with unmatched precision. Always behind the scenes but slaying code skillfully, speaks less but lets his work do the talking. Silent but deadly, no glitches, no errors, just pure perfection.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.about-container {
+    max-width: 800px;
+    margin: auto;
+    text-align: left; /* Ensure content is left-aligned */
+    padding: 2rem;
+}
+
+.team-member {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: all 0.5s ease-in-out;
+    margin-bottom: 2rem;
+    text-align: left; /* Ensure content is left-aligned after animation */
+}
+
+.team-member:nth-child(even) {
+    transform: translateX(100%);
+}
+
+.member-info {
+    background: #f9f9f9;
+    padding: 2rem; /* Increased padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.member-info h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.member-info p {
+    margin: 0.5rem 0 0;
+    color: #666;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const members = document.querySelectorAll('.team-member');
+    let delay = 0;
+    members.forEach(member => {
+        setTimeout(() => {
+            member.style.opacity = 1;
+            member.style.transform = 'translateX(0)';
+        }, delay);
+        delay += 500;
+    });
+});
+</script>
+
+{% endblock %}

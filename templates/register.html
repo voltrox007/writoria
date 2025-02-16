@@ -27,12 +27,13 @@
             <div class="form-group">
                 <label for="gender">Gender</label>
                 <select id="gender" name="gender" class="custom-select" required>
-                    <option value="" disabled selected>Select your gender</option>
+                    <option value="" disabled selected hidden>Select your gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
@@ -92,28 +93,50 @@ body {
     font-weight: 500;
 }
 
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
 .custom-select {
     appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
     background-color: #fff;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="currentColor" stroke-width=".5" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+    color: #242424;
+    
+    width: 100%;
+    padding: 12px 15px;  
+    
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+    cursor: pointer;
+    display: block;
+
+    /* Add custom dropdown arrow */
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="black"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>');
     background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 8px 10px;
-    padding-right: 2rem;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 2.5rem; 
 }
 
+.custom-select:focus {
+    border-color: #1a8917;
+    outline: none;
+    box-shadow: 0 0 5px rgba(26, 137, 23, 0.3);
+}
+
+
 .custom-select option {
-    color: #242424;
+    color: #000;
     background-color: #fff;
+    text-align: left;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+.form-group select {
+    padding: 12px 15px; 
+    height: auto;
 }
 
 .auth-button {
