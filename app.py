@@ -3,7 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
+
 import os
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -13,7 +15,11 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 # Ollama API Configuration
+
 OLLAMA_URL = "http://192.168.12.174:11434/api/generate"  # Ensure this is the correct host for your Ollama server
+
+OLLAMA_URL = "http://127.0.0.1:11434/api/generate"  # Ensure this is the correct host for your Ollama server
+
 MODEL_NAME = "gemma:2b"
 
 # Models
