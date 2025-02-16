@@ -4,8 +4,8 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 
-import os
 
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
