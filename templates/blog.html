@@ -17,8 +17,6 @@
     <div class="posts-grid">
         {% for post in posts %}
         <article class="blog-post" onclick="window.location.href=`{{ url_for('blog_detail', post_id=post.id) }}`;">
-
-
             <div class="post-meta">
                 <div class="author-info">
                     <div class="author-avatar">
@@ -45,7 +43,7 @@ body {
 
 /* Blog Container */
 .blog-container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 2rem;
     background: white;
@@ -88,7 +86,7 @@ body {
 /* Blog Post Grid */
 .posts-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
@@ -131,6 +129,39 @@ body {
 
 .write-blog-btn i {
     color: white;
+}
+
+/* Post Meta */
+.post-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.author-avatar {
+    font-size: 1.5rem;
+    color: #888;
+}
+
+.author-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.post-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.post-excerpt {
+    color: #555;
 }
 </style>
 {% endblock %}

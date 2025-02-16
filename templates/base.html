@@ -6,21 +6,41 @@
     <title>Writoria</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-brand">Writoria</div>
-        <div class="nav-links">
-            <a href="{{ url_for('home') }}">Our story</a>
-            <a href="{{ url_for('blog') }}">Blog</a>
-            <a href="#">Membership</a>
-            <a href="{{ url_for('write_blog') }}">Write</a>
-            {% if current_user.is_authenticated %}
-                <a href="{{ url_for('logout') }}">Sign out</a>
-            {% else %}
-                <a href="{{ url_for('login') }}">Sign in</a>
-                <a href="{{ url_for('register') }}" class="get-started">Get started</a>
-            {% endif %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('writoria' ) }}">Writoria</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Our story</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('blog') }}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Membership</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('write_blog') }}">Write</a>
+                </li>
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Sign out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Sign in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link get-started" href="{{ url_for('register') }}">Get started</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
     </nav>
     
@@ -41,34 +61,35 @@
     </footer>
 
     <!-- Chat Button -->
-<button id="chat-button" class="chat-button" data-authenticated="{{ 'true' if current_user.is_authenticated else 'false' }}">
-    <i class="fas fa-comment"></i>
-</button>
+    <button id="chat-button" class="chat-button" data-authenticated="{{ 'true' if current_user.is_authenticated else 'false' }}">
+        <i class="fas fa-comment"></i>
+    </button>
 
-<!-- Chat Login Popup -->
-<div id="chat-popup" class="chat-popup">
-    <div class="popup-content">
-        <p>You need to log in to use the chat.</p>
-        <a href="{{ url_for('login') }}" class="popup-login">Login</a>
-        <button id="close-popup" class="popup-close">&times;</button>
+    <!-- Chat Login Popup -->
+    <div id="chat-popup" class="chat-popup">
+        <div class="popup-content">
+            <p>You need to log in to use the chat.</p>
+            <a href="{{ url_for('login') }}" class="popup-login">Login</a>
+            <button id="close-popup" class="popup-close">&times;</button>
+        </div>
     </div>
-</div>
 
-<!-- Chat Interface -->
-<div id="chat-interface" class="chat-interface">
-    <div class="chat-header">
-        <h3>Chat with AI</h3>
-        <button id="close-chat" class="close-chat">&times;</button>
+    <!-- Chat Interface -->
+    <div id="chat-interface" class="chat-interface">
+        <div class="chat-header">
+            <h3>Chat with AI</h3>
+            <button id="close-chat" class="close-chat">&times;</button>
+        </div>
+        <div id="chat-messages" class="chat-messages"></div>
+        <form id="chat-form" class="chat-form">
+            <input type="text" id="user-input" placeholder="Type your message..." required>
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </form>
     </div>
-    <div id="chat-messages" class="chat-messages"></div>
-    <form id="chat-form" class="chat-form">
-        <input type="text" id="user-input" placeholder="Type your message..." required>
-        <button type="submit"><i class="fas fa-paper-plane"></i></button>
-    </form>
-</div>
 
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>
 </html>
-

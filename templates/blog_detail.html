@@ -27,12 +27,14 @@
 .blog-detail-container {
     max-width: 800px;
     margin: auto;
-    padding: 2rem;
+    padding: 3rem; /* Increased padding */
 }
 
 .blog-header {
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
 }
 
@@ -40,9 +42,13 @@
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    flex-grow: 1;
 }
 
 .post-actions {
+    position: absolute;
+    bottom: 0;
+    right: 0;
     display: flex;
     gap: 10px;
 }
@@ -58,15 +64,15 @@
 }
 
 .edit-icon:hover {
-    color: black;
+    color: green;
 }
 
 .delete-icon {
-    color: red;
+    color: black;
 }
 
 .delete-icon:hover {
-    color: darkred;
+    color: red;
 }
 
 .author-info {

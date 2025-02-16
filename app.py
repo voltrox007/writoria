@@ -3,10 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import google.generativeai as genai
-
-
 import os
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -36,6 +33,10 @@ def load_user(user_id):
 # Routes
 @app.route('/')
 def home():
+    return render_template('index.html')
+
+@app.route('/writoria', methods=['GET', 'POST'])
+def writoria():
     return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -91,9 +92,8 @@ def write():
         return redirect(url_for('home'))
     return render_template('write.html')
 
-
-
 @app.route('/blog')
+@login_required
 def blog():
     posts = Post.query.order_by(Post.id.desc()).all()
     return render_template('blog.html', posts=posts)
@@ -112,13 +112,14 @@ def write_blog():
             return redirect(url_for('blog'))
             
     return render_template('write-blog.html')
+
 @app.route('/blog/<int:post_id>')
+@login_required
 def blog_detail(post_id):
     post = Post.query.get(post_id)
     if not post:
         return "Error: Post not found", 404  # Debugging Message
     return render_template('blog_detail.html', post=post)
-
 
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
@@ -137,6 +138,7 @@ def edit_blog(post_id):
     return render_template('edit_blog.html', post=post)
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
 @app.route('/delete/<int:post_id>', methods=['POST'])
 @login_required
 def delete_blog(post_id):
@@ -175,9 +177,7 @@ def chat():
 
     return jsonify({"response": response.text})
 
-
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
