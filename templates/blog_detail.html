@@ -35,7 +35,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
 }
 
 .blog-header h1 {
@@ -43,14 +42,15 @@
     font-weight: bold;
     margin-bottom: 0.5rem;
     flex-grow: 1;
+    position: relative;
 }
 
+/* Adjusted Positioning for Icons */
 .post-actions {
-    position: absolute;
-    bottom: 0;
-    right: 0;
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    align-items: center;
+    position: relative; /* Change from absolute */
 }
 
 .edit-icon, .delete-icon {
@@ -75,6 +75,8 @@
     color: red;
 }
 
+
+
 .author-info {
     color: #6b6b6b;
     font-size: 1rem;
@@ -86,6 +88,7 @@
     line-height: 1.8;
     color: #333;
 }
+
 </style>
 
 <script>
