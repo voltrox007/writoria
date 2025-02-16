@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-import google.generativeai as genai
+import requests
 import os
 
 app = Flask(__name__)
@@ -11,6 +11,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+
+# Ollama API Configuration
+OLLAMA_URL = "http://127.0.0.1:11434/api/generate"  # Ensure this is the correct host for your Ollama server
+MODEL_NAME = "gemma:2b"
 
 # Models
 class User(UserMixin, db.Model):
@@ -35,7 +39,7 @@ def load_user(user_id):
 def home():
     return render_template('index.html')
 
-@app.route('/writoria', methods=['GET', 'POST'])
+@app.route('/writoria')
 def writoria():
     return render_template('index.html')
 
@@ -137,8 +141,6 @@ def edit_blog(post_id):
 
     return render_template('edit_blog.html', post=post)
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
 @app.route('/delete/<int:post_id>', methods=['POST'])
 @login_required
 def delete_blog(post_id):
@@ -172,10 +174,20 @@ def chat():
     Answer their question using information from the page. If the information is not available, let them know.
     """
 
-    model = genai.GenerativeModel("gemini-pro")
-    response = model.generate_content(prompt)
+    try:
+        response = requests.post(
+            OLLAMA_URL,
+            json={"model": MODEL_NAME, "prompt": prompt, "stream": False},
+            timeout=30
+        )
 
-    return jsonify({"response": response.text})
+        if response.status_code == 200:
+            response_data = response.json()
+            return jsonify({"response": response_data.get("response", "No response generated.")})
+        else:
+            return jsonify({"error": f"Ollama API error: {response.text}"}), 500
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Request failed: {str(e)}"}), 500
 
 if __name__ == '__main__':
     with app.app_context():
