@@ -2,136 +2,146 @@
 
 {% block content %}
 <div class="blog-container">
-    <div class="blog-header">
-        <h1>Stories for you</h1>
-        {% if current_user.is_authenticated %}
-            <a href="{{ url_for('write_blog') }}" class="write-button">Write a story</a>
-        {% endif %}
-    </div>
+    <!-- Topic Navigation -->
+    <nav class="topic-nav">
+        <div class="topic-links">
+            <a href="#" class="topic-link active">For you</a>
+            <a href="#" class="topic-link">Following</a>
+            <a href="#" class="topic-link">Apple</a>
+            <a href="#" class="topic-link">Android</a>
+            <a href="#" class="topic-link">Leadership</a>
+            <a href="#" class="topic-link">Coding</a>
+            <a href="#" class="topic-link">Python</a>
+        </div>
+    </nav>
 
-    <!-- Floating Write Blog Button -->
-    <a href="{{ url_for('write_blog') }}" class="write-blog-btn">
-        <i class="fas fa-pencil-alt"></i>
-    </a>
-
-    <div class="posts-grid">
-        {% for post in posts %}
-        <article class="blog-post" onclick="window.location.href=`{{ url_for('blog_detail', post_id=post.id) }}`;">
-            <div class="post-meta">
-                <div class="author-info">
-                    <div class="author-avatar">
-                        <i class="fas fa-user-circle"></i>
+    <!-- Main Content -->
+    <div class="content-grid">
+        <main class="posts-feed">
+            {% for post in posts %}
+            <article class="post-card" data-href="{{ url_for('blog_detail', post_id=post.id) }}">
+                <div class="post-meta">
+                    <div class="author-info">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <span class="author-name">{{ post.author.username }}</span>
                     </div>
-                    <span class="author-name">{{ post.author.username }}</span>
+                    <h2 class="post-title">{{ post.title }}</h2>
+                    <p class="post-excerpt">{{ post.content[:200] }}{% if post.content|length > 200 %}...{% endif %}</p>
                 </div>
-                <h2 class="post-title">{{ post.title }}</h2>
-                <p class="post-excerpt">{{ post.content[:200] }}{% if post.content|length > 200 %}...{% endif %}</p>
+            </article>
+            {% endfor %}
+        </main>
+
+        <aside class="sidebar">
+            <div class="staff-picks">
+                <h2>Staff Picks</h2>
+                <div class="staff-pick-item">
+                    <h3>The Art of Writing Clean Code</h3>
+                    <span class="date">Feb 7</span>
+                </div>
+                <div class="staff-pick-item">
+                    <h3>Understanding Python Decorators</h3>
+                    <span class="date">Feb 7</span>
+                </div>
             </div>
-        </article>
-        {% endfor %}
+        </aside>
     </div>
 </div>
 
 <style>
-/* General Styles */
+/* Base styles */
 body {
-    font-family: 'Georgia', serif;
-    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: #242424;
     line-height: 1.6;
 }
 
-/* Blog Container */
 .blog-container {
-    max-width: 1000px;
+    width: 100%;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
 }
 
-/* Blog Header */
-.blog-header {
+/* Header */
+.site-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #ddd;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.blog-header h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
+.site-title {
+    font-size: 1.5rem;
+    margin: 0;
 }
 
-/* Write Button */
-.write-button {
-    background-color: #000;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.write-button:hover {
-    background-color: #333;
-    transform: scale(1.05);
-}
-
-/* Blog Post Grid */
-.posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.header-nav {
+    display: flex;
     gap: 1.5rem;
 }
 
-.blog-post {
-    padding: 1.5rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-    cursor: pointer;
-}
-
-.blog-post:hover {
-    transform: translateY(-3px);
-}
-
-/* Floating Write Blog Button */
-.write-blog-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background-color: black;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+.nav-link {
+    color: #242424;
     text-decoration: none;
-    font-size: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: background 0.3s ease, transform 0.2s ease;
+    font-size: 0.9rem;
 }
 
-.write-blog-btn:hover {
-    background-color: #333;
-    transform: scale(1.1);
+/* Topic Navigation */
+.topic-nav {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.write-blog-btn i {
-    color: white;
+.topic-links {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scrollbar-width: none;
 }
 
-/* Post Meta */
+.topic-links::-webkit-scrollbar {
+    display: none;
+}
+
+.topic-link {
+    color: #242424;
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    padding: 0.5rem 0;
+}
+
+.topic-link.active {
+    color: #242424;
+    font-weight: 500;
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    padding: 2rem 1rem;
+}
+
+/* Posts Feed */
+.posts-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.post-card {
+    cursor: pointer;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .post-meta {
     display: flex;
     flex-direction: column;
@@ -145,25 +155,75 @@ body {
 }
 
 .author-avatar {
-    font-size: 1.5rem;
-    color: #888;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .author-name {
-    font-weight: bold;
-    color: #333;
+    font-size: 0.9rem;
 }
 
 .post-title {
     font-size: 1.5rem;
+    margin: 0;
     font-weight: bold;
-    color: #000;
 }
 
 .post-excerpt {
-    color: #555;
+    color: #666;
+    margin: 0;
 }
 
+/* Sidebar */
+.staff-picks {
+    padding: 1rem;
+}
 
+.staff-picks h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.staff-pick-item {
+    margin-bottom: 1.5rem;
+}
+
+.staff-pick-item h3 {
+    font-size: 1rem;
+    margin: 0 0 0.25rem 0;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .header-nav {
+        display: none;
+    }
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const postCards = document.querySelectorAll('.post-card');
+    postCards.forEach(card => {
+        card.addEventListener('click', function() {
+            window.location.href = this.getAttribute('data-href');
+        });
+    });
+});
+</script>
 {% endblock %}

@@ -9,9 +9,11 @@
                 <a href="{{ url_for('edit_blog', post_id=post.id) }}" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
-                <a href="{{ url_for('delete_blog', post_id=post.id) }}" class="delete-icon" onclick="return confirmDelete();">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
+                <form action="{{ url_for('delete_blog', post_id=post.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="delete-icon" onclick="return confirmDelete();">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
             </div>
         {% endif %}
     </div>
@@ -57,6 +59,9 @@
     font-size: 1.5rem;
     text-decoration: none;
     transition: color 0.3s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .edit-icon {
@@ -74,8 +79,6 @@
 .delete-icon:hover {
     color: red;
 }
-
-
 
 .author-info {
     color: #6b6b6b;
