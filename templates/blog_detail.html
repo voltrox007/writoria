@@ -9,9 +9,11 @@
                 <a href="{{ url_for('edit_blog', post_id=post.id) }}" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
-                <a href="{{ url_for('delete_blog', post_id=post.id) }}" class="delete-icon" onclick="return confirmDelete();">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
+                <form action="{{ url_for('delete_blog', post_id=post.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="delete-icon" onclick="return confirmDelete();">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
             </div>
         {% endif %}
     </div>
@@ -35,7 +37,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
 }
 
 .blog-header h1 {
@@ -43,20 +44,24 @@
     font-weight: bold;
     margin-bottom: 0.5rem;
     flex-grow: 1;
+    position: relative;
 }
 
+/* Adjusted Positioning for Icons */
 .post-actions {
-    position: absolute;
-    bottom: 0;
-    right: 0;
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    align-items: center;
+    position: relative; /* Change from absolute */
 }
 
 .edit-icon, .delete-icon {
     font-size: 1.5rem;
     text-decoration: none;
     transition: color 0.3s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .edit-icon {
@@ -86,6 +91,7 @@
     line-height: 1.8;
     color: #333;
 }
+
 </style>
 
 <script>

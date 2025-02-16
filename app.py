@@ -4,6 +4,10 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 
+import os
+=======
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
@@ -12,7 +16,11 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 # Ollama API Configuration
+
+OLLAMA_URL = "http://192.168.12.174:11434/api/generate"  # Ensure this is the correct host for your Ollama server
+=======
 OLLAMA_URL = "http://127.0.0.1:11434/api/generate"  # Ensure this is the correct host for your Ollama server
+
 MODEL_NAME = "gemma:2b"
 
 # Models
@@ -40,7 +48,7 @@ def home():
 
 @app.route('/writoria')
 def writoria():
-    return render_template('index.html')
+    return redirect(url_for('home'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -101,6 +109,12 @@ def blog():
     posts = Post.query.order_by(Post.id.desc()).all()
     return render_template('blog.html', posts=posts)
 
+@app.route('/blog/<int:post_id>')
+def blog_detail(post_id):
+    print(f"Received post_id: {post_id}")  # Debugging
+    post = Post.query.get_or_404(post_id)
+    return render_template('blog_detail.html', post=post)
+
 @app.route('/write-blog', methods=['GET', 'POST'])
 @login_required
 def write_blog():
@@ -116,13 +130,6 @@ def write_blog():
             
     return render_template('write-blog.html')
 
-@app.route('/blog/<int:post_id>')
-@login_required
-def blog_detail(post_id):
-    post = Post.query.get(post_id)
-    if not post:
-        return "Error: Post not found", 404  # Debugging Message
-    return render_template('blog_detail.html', post=post)
 
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
