@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label for="gender">Gender</label>
                 <select id="gender" name="gender" class="custom-select" required>
-                    <option value="" disabled selected hidden>Select your gender</option>
+                    <option value="" disabled>Select your gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
@@ -78,9 +78,11 @@ body {
 }
 
 .auth-box h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
     text-align: center;
+    font-weight: bold;
+    color: #000; /* Ensures visibility */
 }
 
 .form-group {
@@ -125,15 +127,13 @@ body {
     box-shadow: 0 0 5px rgba(26, 137, 23, 0.3);
 }
 
-
 .custom-select option {
     color: #000;
     background-color: #fff;
-    text-align: left;
     font-size: 1rem;
-    padding: 5px;
 }
 
+/* Fixes select field height */
 .form-group select {
     padding: 12px 15px; 
     height: auto;
