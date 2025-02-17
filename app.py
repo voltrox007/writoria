@@ -15,7 +15,6 @@ login_manager.login_view = 'login'
 
 OLLAMA_URL = "http://192.168.12.174:11434/api/generate"  # Ensure this is the correct host for your Ollama server
 
-
 MODEL_NAME = "gemma:2b"
 
 # Models
