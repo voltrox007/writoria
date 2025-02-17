@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
+import re
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -69,24 +70,34 @@ def login():
             
     return render_template('login.html')
 
+def is_strong_password(password):
+    """Check if password meets strength requirements."""
+    return re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", password)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
-        
+
         if User.query.filter_by(email=email).first():
-            flash('Email already exists')
+            flash('Email already exists', 'error')
             return redirect(url_for('register'))
-            
+
+        if not is_strong_password(password):
+            flash("Password must be at least 8 characters long, contain at least one uppercase letter, "
+                  "one lowercase letter, one number, and one special character.", "error")
+            return redirect(url_for('register'))
+
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, email=email, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
-        
+
+        flash("Account created successfully!", "success")
         return redirect(url_for('login'))
-        
+
     return render_template('register.html')
 
 @app.route('/logout')

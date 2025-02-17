@@ -105,3 +105,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form");
+    const passwordInput = document.getElementById("password");
+
+    form.addEventListener("submit", function(event) {
+        if (!isStrongPassword(passwordInput.value)) {
+            event.preventDefault();
+            alert("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+        }
+    });
+
+    function isStrongPassword(password) {
+        const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return strongPasswordRegex.test(password);
+    }
+});
