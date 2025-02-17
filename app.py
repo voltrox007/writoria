@@ -15,7 +15,6 @@ login_manager.login_view = 'login'
 
 OLLAMA_URL = "http://192.168.12.174:11434/api/generate"  # Ensure this is the correct host for your Ollama server
 
-
 MODEL_NAME = "gemma:2b"
 
 # Models
@@ -56,15 +55,17 @@ def help():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
+        identifier = request.form.get('identifier')
         password = request.form.get('password')
-        user = User.query.filter_by(email=email).first()
+        
+        # Check if the identifier is an email or username
+        user = User.query.filter((User.email == identifier) | (User.username == identifier)).first()
         
         if user and check_password_hash(user.password, password):
             login_user(user)
             return redirect(url_for('home'))
         else:
-            flash('Invalid email or password')
+            flash('Invalid email/username or password')
             
     return render_template('login.html')
 
