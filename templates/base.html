@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}">Our story</a>
+                    <a class="nav-link" href="{{ url_for('about') }}">Our story</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('blog') }}">Blog</a>
@@ -48,9 +48,9 @@
     
     <footer>
         <div class="footer-links">
-            <a href="#">Help</a>
+            <a href="{{ url_for('help') }}">Help</a>
             <a href="#">Status</a>
-            <a href="#">About</a>
+            <a href="{{ url_for('about') }}">About</a>
             <a href="#">Careers</a>
             <a href="{{ url_for('blog')}}">Blog</a>
             <a href="#">Privacy</a>

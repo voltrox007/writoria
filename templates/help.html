@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="help-container">
+    <h1>Help</h1>
+    <div class="help-section">
+        <h2>Getting Started</h2>
+        <p>If you're new to Writoria, here's how to get started:</p>
+        <ul>
+            <li>Register for an account by clicking on the "Get started" button in the navigation bar.</li>
+            <li>Sign in to your account using your credentials.</li>
+            <li>Explore our blog posts and start writing your own by clicking on the "Write" button.</li>
+        </ul>
+    </div>
+    <div class="help-section">
+        <h2>Frequently Asked Questions</h2>
+        <h3>How do I reset my password?</h3>
+        <p>To reset your password, click on the "Forgot password" link on the login page and follow the instructions.</p>
+        <h3>How do I delete my account?</h3>
+        <p>If you wish to delete your account, please contact our support team at support@writoria.com.</p>
+        <h3>How do I contact support?</h3>
+        <p>You can contact our support team by emailing support@writoria.com or by using the chat feature on our website.</p>
+    </div>
+    <div class="help-section">
+        <h2>Contact Us</h2>
+        <p>If you have any other questions or need further assistance, feel free to reach out to us:</p>
+        <ul>
+            <li>Email: support@writoria.com</li>
+            <li>Phone: +1 (123) 456-7890</li>
+            <li>Address: 123 Writoria Lane, Creativity City, CA 12345</li>
+        </ul>
+    </div>
+    <div class="help-section">
+        <h2>Submit a Request</h2>
+        <form action="{{ url_for('submit_request') }}" method="POST" class="request-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<style>
+.help-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 2rem;
+    text-align: left;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.help-section {
+    margin-bottom: 2rem;
+}
+
+.help-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.help-section h3 {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    color: #555;
+}
+
+.help-section p, .help-section ul {
+    font-size: 1rem;
+    color: #666;
+}
+
+.help-section ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.request-form {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+</style>
+
+{% endblock %}
