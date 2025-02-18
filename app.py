@@ -181,7 +181,6 @@ def submit_request():
     name = request.form['name']
     email = request.form['email']
     message = request.form['message']
-    # Handle the form submission (e.g., save to database, send email, etc.)
     flash('Your request has been submitted successfully!', 'success')
     return redirect(url_for('help'))
 
