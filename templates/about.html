@@ -5,30 +5,58 @@
     <h1>About Us</h1>
     <div class="team-member" id="member1">
         <div class="member-info">
-            <h2>Divyam</h2>
-            <p>Role: UI/UX Designer</p>
-            <p>Jack of all trades and master communicator. An extrovert who eats anxiety for breakfast. Responsible for the UI/UX magic as an artist with a keen eye, seamless presentations, and bringing ideas to life with confidence and clarity.</p>
+            <img src="{{ url_for('static', filename='images/Pic1.jpeg') }}" alt="Divyam" class="member-photo">
+            <div class="member-details">
+                <h2>Divyam</h2>
+                <p class="role">Role: UI/UX Designer</p>
+                <p>Jack of all trades and master communicator. An extrovert who eats anxiety for breakfast. Responsible for the UI/UX magic as an artist with a keen eye, seamless presentations, and bringing ideas to life with confidence and clarity.</p>
+                <div class="social-links">
+                    <a href="https://github.com/voltrox007" class="btn btn-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://www.linkedin.com/in/divyam-aeron-a3753630b/" class="btn btn-linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="team-member" id="member2">
         <div class="member-info">
-            <h2>Hritabrata Das</h2>
-            <p>Role: Developer</p>
-            <p>Master coder and API wizard. The backbone of seamless integrations and intelligent systems. The guy who treats working with AI as child's play, turning complex code into smooth functionality, making everything work like magic.</p>
+            <img src="{{ url_for('static', filename='images/Pic2.jpeg') }}" alt="Hritabrata Das" class="member-photo">
+            <div class="member-details">
+                <h2>Hritabrata Das</h2>
+                <p class="role">Role: Developer</p>
+                <p>Master coder and API wizard. The backbone of seamless integrations and intelligent systems. The guy who treats working with AI as child's play, turning complex code into smooth functionality, making everything work like magic.</p>
+                <div class="social-links">
+                    <a href="https://github.com/Hrick-08" class="btn btn-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://www.linkedin.com/in/hritabrata-das-913460326/" class="btn btn-linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="team-member" id="member3">
         <div class="member-info">
-            <h2>Abhinav Dadwal</h2>
-            <p>Role: Developer</p>
-            <p>Code virtuoso and full-stack magician. CSS, JS, Flask, Python ??? Not a problem. The sleezy coder who slays, whether it's lines of code or hearts, all with a killer smile. Ask him anything, and watch the magic unfold. Because if it can be coded, he’ll make it happen.</p>
+            <img src="{{ url_for('static', filename='images/Pic3.jpeg') }}" alt="Abhinav Dadwal" class="member-photo">
+            <div class="member-details">
+                <h2>Abhinav Dadwal</h2>
+                <p class="role">Role: Developer</p>
+                <p>Code virtuoso and full-stack magician. CSS, JS, Flask, Python ??? Not a problem. The sleezy coder who slays, whether it's lines of code or hearts, all with a killer smile. Ask him anything, and watch the magic unfold. Because if it can be coded, he’ll make it happen.</p>
+                <div class="social-links">
+                    <a href="https://github.com/Abh1nav7" class="btn btn-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://www.linkedin.com/in/abhinav-dadwal-3b280a324/" class="btn btn-linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="team-member" id="member4">
         <div class="member-info">
-            <h2>Harsh Kumar</h2>
-            <p>Role: Data and Search</p>
-            <p>The silent architect of our digital empire. The kingmaker who manages the database with unmatched precision. Always behind the scenes but slaying code skillfully, speaks less but lets his work do the talking. Silent but deadly, no glitches, no errors, just pure perfection.</p>
+            <img src="{{ url_for('static', filename='images/Pic4.jpeg') }}" alt="Harsh Kumar" class="member-photo">
+            <div class="member-details">
+                <h2>Harsh Kumar</h2>
+                <p class="role">Role: Data and Search</p>
+                <p>The silent architect of our digital empire. The kingmaker who manages the database with unmatched precision. Always behind the scenes but slaying code skillfully, speaks less but lets his work do the talking. Silent but deadly, no glitches, no errors, just pure perfection.</p>
+                <div class="social-links">
+                    <a href="https://github.com/HarshKumar510" class="btn btn-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://www.linkedin.com/in/harsh-kumar-552368324/" class="btn btn-linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -58,6 +86,24 @@
     padding: 2rem; /* Increased padding */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.member-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.member-photo:hover {
+    transform: scale(1.1);
+}
+
+.member-details {
+    flex: 1;
 }
 
 .member-info h2 {
@@ -65,9 +111,45 @@
     font-size: 1.5rem;
 }
 
+.member-info .role {
+    margin: 0.5rem 0;
+    font-weight: bold;
+    color: #333;
+}
+
 .member-info p {
     margin: 0.5rem 0 0;
     color: #666;
+}
+
+.social-links {
+    margin-top: 1rem;
+}
+
+.social-links .btn {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.social-links .btn-github {
+    background-color: #333;
+}
+
+.social-links .btn-github:hover {
+    background-color: #555;
+}
+
+.social-links .btn-linkedin {
+    background-color: #0077b5;
+}
+
+.social-links .btn-linkedin:hover {
+    background-color: #005582;
 }
 </style>
 

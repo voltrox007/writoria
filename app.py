@@ -2,20 +2,21 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+import os
 import requests
 import re
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['UPLOAD_FOLDER'] = 'static/profile_pics'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 # Ollama API Configuration
-
 OLLAMA_URL = "http://192.168.12.174:11434/api/generate"  # Ensure this is the correct host for your Ollama server
-
 MODEL_NAME = "gemma:2b"
 
 # Models
@@ -24,6 +25,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    age = db.Column(db.Integer, nullable=True)
+    gender = db.Column(db.String(10), nullable=True)
+    profile_pic = db.Column(db.String(120), nullable=True)
     posts = db.relationship('Post', backref='author', lazy=True)
 
 class Post(db.Model):
@@ -44,6 +48,31 @@ def home():
 @app.route('/writoria')
 def writoria():
     return redirect(url_for('home'))
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', user=current_user)
+
+@app.route('/upload_profile_pic', methods=['POST'])
+@login_required
+def upload_profile_pic():
+    if 'profile_pic' not in request.files:
+        flash('No file part', 'error')
+        return redirect(url_for('profile'))
+    
+    file = request.files['profile_pic']
+    if file.filename == '':
+        flash('No selected file', 'error')
+        return redirect(url_for('profile'))
+    
+    if file:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        current_user.profile_pic = filename
+        db.session.commit()
+        flash('Profile picture updated successfully!', 'success')
+        return redirect(url_for('profile'))
 
 @app.route('/about')
 def about():
@@ -80,6 +109,8 @@ def register():
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
+        age = request.form.get('age')
+        gender = request.form.get('gender')
 
         if User.query.filter_by(email=email).first():
             flash('Email already exists', 'error')
@@ -91,7 +122,7 @@ def register():
             return redirect(url_for('register'))
 
         hashed_password = generate_password_hash(password)
-        new_user = User(username=username, email=email, password=hashed_password)
+        new_user = User(username=username, email=email, password=hashed_password, age=age, gender=gender)
         db.session.add(new_user)
         db.session.commit()
 
@@ -126,7 +157,6 @@ def blog():
 
 @app.route('/blog/<int:post_id>')
 def blog_detail(post_id):
-    print(f"Received post_id: {post_id}")  # Debugging
     post = Post.query.get_or_404(post_id)
     return render_template('blog_detail.html', post=post)
 
@@ -144,7 +174,6 @@ def write_blog():
             return redirect(url_for('blog'))
             
     return render_template('write-blog.html')
-
 
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
@@ -174,7 +203,6 @@ def delete_blog(post_id):
     db.session.commit()
     flash("Post deleted successfully.")
     return redirect(url_for('blog'))
-
 
 @app.route('/submit_request', methods=['POST'])
 def submit_request():
