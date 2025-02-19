@@ -230,7 +230,11 @@ def chat():
     The user asks: "{user_message}"
     
     Answer their question using information from the page. If the information is not available, let them know.
-    """
+
+    If the user asks about your creator, respond with: 
+    "I was created by Hritabrata Das, a first-year CSE AI & ML student at Chitkara University, Rajpura, Punjab, India."
+"""
+
 
     try:
         response = requests.post(
